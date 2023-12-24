@@ -3,8 +3,10 @@ import HomePage from './src/pages/HomePage';
 
 export default function App() {
   return (
-    <SafeAreaView className='h-full flex items-center'>
-      <HomePage />
+    <SafeAreaView className='h-full flex items-center container'>
+      <View className='w-full h-full'>
+        <HomePage />
+      </View>
     </SafeAreaView>
   );
 }
