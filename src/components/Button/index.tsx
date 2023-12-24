@@ -1,4 +1,5 @@
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import TextWrapper from "../TextWrapper";
 
 interface ButtonProps {
   text: string;
@@ -11,7 +12,7 @@ export default function ButtonComponent(props: ButtonProps) {
         onPress={props.onClick} 
         className='bg-[#45484f] px-24 py-6 mt-4 flex justify-center items-center rounded-xl'
       >
-        <Text className='text-white text-2xl'>{props.text}</Text>
+        <TextWrapper className='text-white text-2xl'>{props.text}</TextWrapper>
       </TouchableOpacity>
   )
 }

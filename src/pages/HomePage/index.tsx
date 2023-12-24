@@ -1,15 +1,16 @@
-import { View, Alert, Text } from 'react-native';
+import { View, Alert } from 'react-native';
 import ButtonComponent from '../../components/Button';
+import TextWrapper from '../../components/TextWrapper';
 
 export default function HomePage() {
   return (
     <View className='min-h-[100vh] bg-[#292a2d] w-full flex justify-center items-center opacity-1'>
-      <Text className="text-4xl font-bold text-orange-500 italic">tezenite wallet</Text>
+      <TextWrapper className="text-5xl font-bold text-orange-500 italic">tezenite wallet</TextWrapper>
       <View>
         <ButtonComponent text="create wallet" onClick={() => Alert.alert('create new wallet')} />
         <ButtonComponent text="recover wallet" onClick={() => Alert.alert('recover wallet')} />
       </View>
-      <Text className="text-white text-xs mt-2 mb-24">made with love by @tohrxyz</Text>
+      <TextWrapper className="text-white text-xs mt-2 mb-24">made with love by @tohrxyz</TextWrapper>
     </View>
   );
 }
