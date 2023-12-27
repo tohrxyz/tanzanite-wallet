@@ -5,6 +5,7 @@ import { NativeRouter, Route, Routes } from "react-router-native"
 import WalletScreen from './src/screens/WalletScreen';
 import { getDBConnection } from './src/services/getDbConnection';
 import { useCallback, useEffect } from 'react';
+import RecoveryScreen from './src/screens/RecoveryScreen';
 
 export default function App() {
   const loadDbData = useCallback(async () => {
@@ -34,7 +35,7 @@ export default function App() {
         <Routes>
           <Route path="/" Component={IntroScreen} />
           <Route path="/wallet" Component={WalletScreen} />
-          {/* <Route path="/recover" Component={RecoverScreen} /> */}
+          <Route path="/recover" Component={RecoveryScreen} />
         </Routes>
       </SafeAreaView>
     </NativeRouter>
