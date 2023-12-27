@@ -12,11 +12,50 @@ export default function App() {
     try {
       const db = await getDBConnection();
       console.log("Connected to DB")
+      db.transaction(tx => {
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS wallet (id INTEGER PRIMARY KEY NOT NULL, isCreated BOOLEAN NOT NULL, seed TEXT);',
+          [],
+          (_, result) => console.log("Create table result: ", result),
+          (_, error) => {
+            console.error("Error with creating table: ", error)
+            return false;
+          }
+        );
+      
+      })
+      db.transaction(tx => {
+        tx.executeSql(
+          'SELECT isCreated FROM wallet WHERE id = ?',
+          [1],
+          (_, { rows }) => {
+            const isCreated = rows?._array[0]?.isCreated;
+            console.log("Select isCreated result: ", rows?._array[0]?.isCreated)
+
+            if (isCreated === undefined || isCreated === null) {
+              console.log("isCreated is null or undefined")
+              tx.executeSql(
+                'INSERT INTO wallet (isCreated) VALUES (?)',
+                ["true"],
+                (_, result) => console.log("Insert result: ", result),
+                (_, error) => {
+                  console.error("Error with inserting: ", error)
+                  return false;
+                }
+              );
+            }
+          },
+          (_, error) => {
+            console.error('Error with selecting isCreated: ', error);
+            return false; // Return false to roll back the transaction
+          }
+        );
+      });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }, []);
-
+  
   useEffect(() => {
     loadDbData();
   }, [loadDbData])
