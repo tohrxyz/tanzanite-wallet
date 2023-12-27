@@ -6,6 +6,7 @@ import WalletScreen from './src/screens/WalletScreen';
 import { getDBConnection } from './src/services/getDbConnection';
 import { useCallback, useEffect } from 'react';
 import RecoveryScreen from './src/screens/RecoveryScreen';
+import { AppDatabase } from './src/services/database';
 
 export default function App() {
   const loadDbData = useCallback(async () => {
@@ -34,15 +35,9 @@ export default function App() {
 
             if (isCreated === undefined || isCreated === null) {
               console.log("isCreated is null or undefined")
-              tx.executeSql(
-                'INSERT INTO wallet (isCreated) VALUES (?)',
-                ["true"],
-                (_, result) => console.log("Insert result: ", result),
-                (_, error) => {
-                  console.error("Error with inserting: ", error)
-                  return false;
-                }
-              );
+              const appDB = new AppDatabase();
+
+              appDB.insertIntoTable("wallet", "isCreated", "false");
             }
           },
           (_, error) => {
