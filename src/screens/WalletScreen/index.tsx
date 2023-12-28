@@ -9,9 +9,9 @@ export default function WalletScreen () {
   const [index, setIndex] = useState(1);
   const layout = useWindowDimensions();
   const [routes] = useState([
-    { key: 'send', title: 'Send' },
-    { key: 'history', title: 'Home'},
     { key: 'receive', title: 'Receive' },
+    { key: 'history', title: 'Home'},
+    { key: 'send', title: 'Send' },
   ]);
   
   const renderScene = SceneMap({
