@@ -1,7 +1,6 @@
-import { ScrollView, View, useWindowDimensions } from "react-native";
-import TextWrapper from "../../components/TextWrapper";
+import { View, useWindowDimensions } from "react-native";
 import { TabView, TabBar, Route, SceneRendererProps, SceneMap } from 'react-native-tab-view';
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import HistoryScene from "../WalletScenes/HistoryScene";
 import ReceiveScene from "../WalletScenes/ReceiveScene";
 import SendScene from "../WalletScenes/SendScene";
@@ -29,12 +28,12 @@ export default function WalletScreen () {
         renderScene={renderScene}
         initialLayout={{ width: layout.width }}
         className="w-full min-h-[90vh]"
-        tabBarPosition="bottom"
+        tabBarPosition="top"
         renderTabBar={props => (
           <TabBar
             {...props}
             indicatorStyle={{ backgroundColor: 'rgb(249 115 22)' }}
-            style={{ backgroundColor: 'black',  }}
+            style={{ backgroundColor: '#45474b' }}
             labelStyle={{ color: 'white', fontSize: 14 }}
             activeColor="rgb(249 115 22)"
             />)}
