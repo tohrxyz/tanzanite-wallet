@@ -1,5 +1,6 @@
-import { Image, View } from "react-native";
+import { Button, Image, View } from "react-native";
 import TextWrapper from "../../../components/TextWrapper";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 
 const formatAddress = (address: string) => {
   // add space every 5 chars
@@ -15,6 +16,13 @@ const formatAddress = (address: string) => {
 }
 
 export default function ReceiveScreen () {
+
+  // only for dev purpouses
+  const { removeItem } = useAsyncStorage("@TanzaniteWallet");
+  const clearAppData = async () => {
+    alert("App data will be cleared");
+    await removeItem();
+  }
   return (
     <View className="bg-[#292a2d] h-full w-full flex flex-col items-center py-6">
       <TextWrapper className="text-orange-500 text-5xl">Receive</TextWrapper>
@@ -22,6 +30,8 @@ export default function ReceiveScreen () {
         <Image source={require('../../../../assets/xmr-address-qr-code.png')} />
         <TextWrapper className="text-white text-2xl px-10 pt-10">{formatAddress("83QP5atyd4nbB4nq3yQJL4ApxkCPdhMFaCU6cSzXYjE8c5qFX5DxeXqYTZjcFd43Gq7onGBhTnVN5VrJgX4RWuGqNBoZsiH")}</TextWrapper>
       </View>
+      {/* only for dev purpouses */}
+      <Button title="clear app data" onPress={() => clearAppData()}/> 
     </View>
   )
 }
