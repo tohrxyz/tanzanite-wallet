@@ -4,14 +4,18 @@ import { useFonts, VT323_400Regular } from '@expo-google-fonts/vt323';
 import { NativeRouter, Route, Routes } from "react-router-native"
 import WalletScreen from './src/screens/WalletScreen';
 import { getDBConnection } from './src/services/getDbConnection';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import RecoveryScreen from './src/screens/RecoveryScreen';
 import { AppDatabase } from './src/services/database';
+import { SQLiteDatabase } from 'expo-sqlite';
 
 export default function App() {
+  const [db, setDb] = useState<SQLiteDatabase>();
+  const [isCreated, setIsCreated] = useState<boolean>(false);
   const loadDbData = useCallback(async () => {
     try {
       const db = await getDBConnection();
+      setDb(db);
       console.log("Connected to DB")
       db.transaction(tx => {
         tx.executeSql(
@@ -31,6 +35,9 @@ export default function App() {
           [1],
           (_, { rows }) => {
             const isCreated = rows?._array[0]?.isCreated;
+            if (isCreated) {
+              setIsCreated(isCreated);
+            }
             console.log("Select isCreated result: ", rows?._array[0]?.isCreated)
 
             if (isCreated === undefined || isCreated === null) {
@@ -50,14 +57,29 @@ export default function App() {
       console.error(err);
     }
   }, []);
+
+  const closeDb = useCallback(async () => {
+    db?.closeAsync();
+    console.log("Closed DB")
+  }, [db]);
   
   useEffect(() => {
     loadDbData();
+
+    return () => {
+      closeDb();
+    }
   }, [loadDbData])
 
   let [fontsLoaded] = useFonts({
     VT323_400Regular,
   });
+
+  useEffect(() => {
+    if (isCreated) {
+      console.log("isCreated is true")
+    }
+  }, [isCreated])
 
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
